@@ -1,0 +1,41 @@
+0 LEVEL CLASS           /---->    /---->   [ O ]   <----\    <----\  
+                       /         /           ^           \         \       
+                      |         |            |            |         |
+1 LEVEL CLASS       [ C ]     [ A ]        [ B ]        [ D ]     [ E ]
+                        ^       ^    ^  ^         ^  ^            ^
+                         \      |     \/           \/            / 
+2 LEVEL CLASS             \ _ [ K1] _ /\ _ [ K3] _ /\ _ [ K2] _ /
+                                  ^          ^          ^      
+                                   \         |         /          
+3 LEVEL CLASS                       \ ____ [ Z ] ____ /
+
+
+DESCRIPTION:
+Basically in this graph class O does not have any parents and features a number of children: 
+[A, B, C, D, E]. Our [A, B, C] classes are the parents to K1, [D, B, E] for K2 and [D, A] 
+for K3. Finally class Z extends from [K1, K2, K3].
+
+This represents a fairly complex dependency graph and not typically representative 
+of “normal” systems, however it gives us lots of examples to dissect how C3 works.
+
+Let’s start breaking this down:
+
+Class  Linearization	                           Comments
+L(O)   [0]	                                       This is relatively trivial and would be [0] as 
+                                                   it has no parents
+L(A)   [A] + merge(l[O], [O])	                   The linearization of A is A plus the merge of 
+                                                   its parent’s,
+       [A, O]	                                   Thus the final linearization equals [A,O]
+L(B)   [B, O]	                                   [B, C, D, E] all have very similar linearizations
+L(K1)  [K1] + merge(L(A), L(B), L(C), [A,B,C])	   First we need to find the linearizations 
+                                                   of K1’s parents, [A, B, C] and merge them with the parent list [A, B, C]
+       [K1] + merge([A,O], [B,O, [C,O], [A,B,C]]) Class A is a good candidate as it is the head
+                                                   of the parent list
+       [K1, A] + merge([O], [B, O], [C, O], [B, C])	We shouldn’t choose class O here as it 
+                                                   appears in the tails of list 2 and 3, the next 
+                                                   suitable class is B
+       [K1, A, B] + merge([O], [O], [C,O], [C])	   Again O is not a good candidate, we now go 
+                                                   with C
+       [K1, A, B, C] + merge([O], [O], [O])	       Finally we have to choose class O as all other 
+                                                   options are exhausted
+       [K1, A, B, C, O]	                           Our final solution!!!
