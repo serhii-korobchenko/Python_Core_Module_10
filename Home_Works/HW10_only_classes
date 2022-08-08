@@ -1,0 +1,72 @@
+from collections import UserDict
+from unicodedata import name
+
+
+class AddressBook (UserDict):
+    
+
+    
+    def add_record(self, name, phone):
+        
+        Name.value = name
+        Phone.value = phone
+        self.data[Name.value] = [(Record.phone.value)]
+
+        #self.data[name] = phone
+
+
+class Field:
+    pass
+
+class Name (Field):
+    value = ''
+
+class Phone (Field):
+    value = ''
+
+class Record (Name, Phone):
+    name = Name()
+    phone = Phone()
+    
+    
+
+    def add_phone (self, phone):
+        add_book.data[self.name.value].append(phone)
+       
+
+
+
+    def del_phone (self):
+        pass
+
+    def edit_phone (self):
+        pass
+
+
+add_book = AddressBook()
+add_book.add_record('Serhii', '0675261531')
+add_book.add_record('Andrii', '0325261531')
+
+print(add_book.data)
+Record().add_phone('0962327381')
+print(add_book.data)
+
+
+
+""" as_dict = AddressBook()
+as_dict[Record.name.value] = '0675261531'
+print(as_dict.data) """
+
+
+""" print(dir(Name))
+name_1 = Name()
+name_1.name = 'Serhii'
+print(name_1.name)
+name_2 = Name()
+name_2.name = 'Andrii'
+print(name_2.name)
+
+
+print(Record().name) """
+
+
