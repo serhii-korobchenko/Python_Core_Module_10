@@ -25,20 +25,18 @@ class Record:
     phone = Phone()
     
     
-    def add_phone (self, phone):
-        add_book.data[self.name.value].append(phone)
+    def add_phone (self, name, phone):
+        add_book.data[name].append(phone)
        
 
-    def del_phone (self, phone):
-        add_book.data[self.name.value].remove(phone)
+    def del_phone (self, name, phone):
+        add_book.data[name].remove(phone)
 
-    def edit_phone (self, phone):
+    def edit_phone (self, name, new_phone):
         
-        index_edit = add_book.data[self.name.value].index(phone)
-
-        new_phone = input('Enter new telephone number. Please! : ')
-        add_book.data[self.name.value].remove(phone)
-        add_book.data[self.name.value].insert(index_edit, new_phone)
+    
+        add_book.data[name].clear()
+        add_book.data[name].append(new_phone)
         
 
 
@@ -56,30 +54,26 @@ print(add_book.data)
 
 # add phone
 print("add phone")
-Record().add_phone('0962327381')
+Record().add_phone('Serhii', '0962327381')
 print(add_book.data)
 
 
 # add phone
 print("add phone")
-Record().add_phone('5678908967')
+Record().add_phone('Andrii', '5678908967')
 print(add_book.data)
 
 
-# del phone
+ # del phone
 print("del phone")
-Record().del_phone('0962327381')
-print(add_book.data)
+Record().del_phone('Serhii','0675261531')
+print(add_book.data) 
 
 
-# add phone
-print("add phone")
-Record().add_phone('0962327381')
-print(add_book.data)
 
 # edit phone
 print("edit phone")
-Record().edit_phone('5678908967')
+Record().edit_phone('Andrii', '7777777777')
 print(add_book.data)
 
 

@@ -6,9 +6,9 @@ class AddressBook (UserDict):
         
     def add_record(self, name, phone):
         
-        Name.value = name
-        Phone.value = phone
-        self.data[Name.value] = [(Record.phone.value)]
+        
+        
+        self.data[name] = Record(name, phone)
 
 
 class Field:
@@ -18,11 +18,19 @@ class Name (Field):
     value = ''
 
 class Phone (Field):
-    value = ''
+    
+    def __init__(self, value): # constructor
+                   
+        self.value = value             # field 1
 
 class Record:
-    name = Name()
-    phone = Phone()
+    
+    def __init__(self, name, phone): # constructor
+        self.name = name
+        #Phone.value = phone            # field 1
+        self.phone_stor = Phone(phone)             # field 2
+    
+    
     
     
     def add_phone (self, phone):
@@ -52,35 +60,38 @@ add_book.add_record('Andrii', '0325261531')
 
 # show all 
 print('show all')
-print(add_book.data)
+print(add_book.data['Andrii'].phone_stor.value)
+print(type(add_book.data['Serhii'].phone_stor.value))
 
 # add phone
 print("add phone")
-Record().add_phone('0962327381')
-print(add_book.data)
+add_book.data['Andrii'].phone_stor = Phone('77777')
+
+#Record().add_phone('0962327381')
+print(add_book.data['Andrii'].phone_stor.value)
 
 
-# add phone
+""" # add phone
 print("add phone")
 Record().add_phone('5678908967')
-print(add_book.data)
+print(add_book.data) """
 
 
-# del phone
+""" # del phone
 print("del phone")
 Record().del_phone('0962327381')
-print(add_book.data)
+print(add_book.data) """
 
 
-# add phone
+""" # add phone
 print("add phone")
 Record().add_phone('0962327381')
-print(add_book.data)
+print(add_book.data) """
 
-# edit phone
+""" # edit phone
 print("edit phone")
 Record().edit_phone('5678908967')
-print(add_book.data)
+print(add_book.data) """
 
 
 

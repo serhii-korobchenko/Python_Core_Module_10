@@ -14,6 +14,8 @@
 #                          - "change name telephone number" - save new telephone number for existed contact
 #                          - "phone name" - show telephone number
 #                          - "show all" - show all contacts (name telephone number)
+#                          - "addnum name telephone number" - add aditional tel number for certain contact
+#                          - "del name telephone number" - del tel number for certain contact
 #                          - "good bye" or "close" or "exit" - bot stops work and messege "Good bye!"
 #
 #
@@ -46,17 +48,45 @@
 import re
 from collections import UserDict
 
-data_base = {}
+
 error_type = ''
 
+
 class AddressBook (UserDict):
+        
+    def add_record(self, name, phone):
+        
+        Name.value = name
+        Phone.value = phone
+        self.data[Name.value] = [(Record.phone.value)]
+
+
+class Field:
     pass
 
-class Record (AddressBook):
-    pass
+class Name (Field):
+    value = ''
 
-class Field (Record):
-    pass
+class Phone (Field):
+    value = ''
+
+class Record:
+    name = Name()
+    phone = Phone()
+    
+    
+    def add_phone (self, name, phone):
+        add_book.data[name].append(phone)
+       
+
+    def del_phone (self, name, phone):
+        add_book.data[name].remove(phone)
+
+    def edit_phone (self, name, new_phone):
+        
+    
+        add_book.data[name].clear()
+        add_book.data[name].append(new_phone)
 
 
 
@@ -106,13 +136,16 @@ def hello_func ():
     print('How can I help you?')
 
 @input_error
-def add_func (name, phone):
-    global data_base
+def add_func (name, phone):   #1&2
+
     global error_type
     try:
         if re.match(r"^[0-9]{10,10}$", phone):
             
-            data_base[name] = phone
+
+            add_book.add_record(name, phone) ###2
+
+
             print ('Information has been added successfully!')
         else:
             raise ValueError
@@ -123,14 +156,16 @@ def add_func (name, phone):
 
 
 @input_error
-def change_func (name, phone):
-    global data_base
+def change_func (name, phone):    #1&2
+
     global error_type
     try:
-        if name in data_base:
+        if name in add_book.data:
             if re.match(r"^[0-9]{10,10}$", phone):
                 
-                data_base.update({name: phone})
+
+                Record().edit_phone(name, phone) ### 2
+
                 print ('Phone number has been changed successfully!')
             else:
                 raise ValueError
@@ -148,12 +183,13 @@ def change_func (name, phone):
     
 
 @input_error
-def phone_func (name):
-    global data_base
+def phone_func (name):           #1&2
+
     global error_type
     try:
-        if name in data_base:
-            for key, value in data_base.items():
+
+        if name in add_book.data:   ### 2
+            for key, value in add_book.data.items():  ### 2
                 if key == name:
                     print(f'Phone number assigned for requested name is: {value}')
         else:
@@ -165,25 +201,75 @@ def phone_func (name):
 
 
 def show_func ():
-    global data_base
-    if len(data_base) == 0:
+
+    if len(add_book.data) == 0:
         print('Data Base is empty yet. Please add someone!')
     else:
         print('Data Base contains next contacts:')
-        for key, value in data_base.items():
-            print(f'Name : {key} | Telephone number: {value}')
+ 
+        for key, value in add_book.data.items():                   ### 2
+            mystring = ', '.join(map(str, value))
+            print(f'Name : {key} | Telephone number: {mystring}')
+        
+
+@input_error
+def addnum_func (name, phone):   #1&2
+
+    global error_type
+    try:
+        if re.match(r"^[0-9]{10,10}$", phone):
+            
+
+            Record().add_phone(name, phone) ###2
+
+
+            print ('Information has been added successfully!')
+        else:
+            raise ValueError
+
+    except ValueError:
+        error_type = 'ValueError'
+        print("Telephone number does not match format - should be 10 digits")
+
+
+@input_error
+def del_func (name, phone):   #1&2
+
+    global error_type
+    try:
+        if re.match(r"^[0-9]{10,10}$", phone):
+            
+
+            Record().del_phone(name, phone) ###2
+
+
+            print ('Telephone number has been deleted successfully!')
+        else:
+            raise ValueError
+
+    except ValueError:
+        error_type = 'ValueError'
+        print("Telephone number does not match format - should be 10 digits")
+
 
 def good_buy_func ():
     print('Good bye!')
     return 'stop'
     
 
+
+
+
 ### MAIN BODY FUNCTION
 def main():
-    
+    # create dict
+    #print('create dict')
+    global add_book
+    add_book = AddressBook()
+
     commands_dict = {'hello': hello_func, 'add': add_func, 'change': change_func,\
          'phone': phone_func, 'show': show_func, 'good': good_buy_func,\
-         'close': good_buy_func, 'exit': good_buy_func}
+         'close': good_buy_func, 'exit': good_buy_func, 'addnum': addnum_func, 'del': del_func }
     
     stop_flag = ''
       
