@@ -42,15 +42,10 @@
 #                                                 - del  field Phone
 #                                                 - edit field Phone
 
-
-
-
 import re
 from collections import UserDict
 
-
 error_type = ''
-
 
 class AddressBook (UserDict):
         
@@ -59,7 +54,6 @@ class AddressBook (UserDict):
         Name.value = name
         Phone.value = phone
         self.data[Name.value] = [(Record.phone.value)]
-
 
 class Field:
     pass
@@ -73,22 +67,18 @@ class Phone (Field):
 class Record:
     name = Name()
     phone = Phone()
-    
-    
+        
     def add_phone (self, name, phone):
         add_book.data[name].append(phone)
        
-
     def del_phone (self, name, phone):
         add_book.data[name].remove(phone)
 
     def edit_phone (self, name, new_phone):
         
-    
+   
         add_book.data[name].clear()
         add_book.data[name].append(new_phone)
-
-
 
 def command_parser (command): # command`s parser
     command_id = ''
@@ -111,7 +101,6 @@ def command_parser (command): # command`s parser
         
     return command_id, name, phone
 
-
 ### Decorator
 def input_error(func): # decorator
     
@@ -129,8 +118,6 @@ def input_error(func): # decorator
         
     return inner
 
-
-
 ### handlers:
 def hello_func ():
     print('How can I help you?')
@@ -142,9 +129,7 @@ def add_func (name, phone):   #1&2
     try:
         if re.match(r"^[0-9]{10,10}$", phone):
             
-
             add_book.add_record(name, phone) ###2
-
 
             print ('Information has been added successfully!')
         else:
@@ -154,7 +139,6 @@ def add_func (name, phone):   #1&2
         error_type = 'ValueError'
         print("Telephone number does not match format - should be 10 digits")
 
-
 @input_error
 def change_func (name, phone):    #1&2
 
@@ -163,7 +147,6 @@ def change_func (name, phone):    #1&2
         if name in add_book.data:
             if re.match(r"^[0-9]{10,10}$", phone):
                 
-
                 Record().edit_phone(name, phone) ### 2
 
                 print ('Phone number has been changed successfully!')
@@ -181,7 +164,6 @@ def change_func (name, phone):    #1&2
         error_type = 'KeyError'
         print('Name does not exist')
     
-
 @input_error
 def phone_func (name):           #1&2
 
@@ -199,7 +181,6 @@ def phone_func (name):           #1&2
         error_type = 'KeyError'
         print('Name does not exist.') #  - decorator
 
-
 def show_func ():
 
     if len(add_book.data) == 0:
@@ -211,7 +192,6 @@ def show_func ():
             mystring = ', '.join(map(str, value))
             print(f'Name : {key} | Telephone number: {mystring}')
         
-
 @input_error
 def addnum_func (name, phone):   #1&2
 
@@ -219,9 +199,7 @@ def addnum_func (name, phone):   #1&2
     try:
         if re.match(r"^[0-9]{10,10}$", phone):
             
-
             Record().add_phone(name, phone) ###2
-
 
             print ('Information has been added successfully!')
         else:
@@ -231,7 +209,6 @@ def addnum_func (name, phone):   #1&2
         error_type = 'ValueError'
         print("Telephone number does not match format - should be 10 digits")
 
-
 @input_error
 def del_func (name, phone):   #1&2
 
@@ -239,9 +216,7 @@ def del_func (name, phone):   #1&2
     try:
         if re.match(r"^[0-9]{10,10}$", phone):
             
-
             Record().del_phone(name, phone) ###2
-
 
             print ('Telephone number has been deleted successfully!')
         else:
@@ -251,14 +226,9 @@ def del_func (name, phone):   #1&2
         error_type = 'ValueError'
         print("Telephone number does not match format - should be 10 digits")
 
-
 def good_buy_func ():
     print('Good bye!')
     return 'stop'
-    
-
-
-
 
 ### MAIN BODY FUNCTION
 def main():
