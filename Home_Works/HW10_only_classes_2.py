@@ -19,16 +19,20 @@ class Name (Field):
 
 class Phone (Field):
     
-    def __init__(self, value): # constructor
-                   
+    def __init__(self, name, value): # constructor
+        
+        self.name = name          # field 1
         self.value = value             # field 1
 
 class Record:
     
     def __init__(self, name, phone): # constructor
         self.name = name
-        #Phone.value = phone            # field 1
-        self.phone_stor = Phone(phone)             # field 2
+        self.agg_phone = phone
+        
+       
+       
+        #self.phone_stor = Phone(phone)             # field 2
     
     
     
@@ -57,6 +61,11 @@ add_book = AddressBook()
 # add record
 add_book.add_record('Serhii', '0675261531')
 add_book.add_record('Andrii', '0325261531')
+
+# dubling phone field for one 
+
+
+
 
 # show all 
 print('show all')
@@ -94,22 +103,5 @@ Record().edit_phone('5678908967')
 print(add_book.data) """
 
 
-
-
-""" as_dict = AddressBook()
-as_dict[Record.name.value] = '0675261531'
-print(as_dict.data) """
-
-
-""" print(dir(Name))
-name_1 = Name()
-name_1.name = 'Serhii'
-print(name_1.name)
-name_2 = Name()
-name_2.name = 'Andrii'
-print(name_2.name)
-
-
-print(Record().name) """
 
 
