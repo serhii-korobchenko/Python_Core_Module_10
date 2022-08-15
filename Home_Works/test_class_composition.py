@@ -36,21 +36,3 @@ print("armaments_1.obj_tank.crew", armaments_1.obj_tank.crew)
 
 
 
-# Inspect Class atributes
-for i in inspect.getmembers(armaments_1.obj_tank):
-      
-    # to remove private and protected
-    # functions
-    if not i[0].startswith('_'):
-          
-        # To remove other methods that
-        # doesnot start with a underscore
-        #if not inspect.ismethod(i[1]): 
-        print(i)
-
-
-
-
-
-
-
